@@ -1,4 +1,12 @@
+import sys
+import os
+
+# Add the parent directory of 'components' to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from fasthtml.common import *
+from components.button import CustomButton
+from components.label import CustomLabel
 
 class FlowPanel:
     def __init__(self, *args, **kwargs):
@@ -28,59 +36,29 @@ class FlowPanel:
         </style>
         """
 
-class CustomLabel:
-    def __init__(self, text, cls="label"):
-        """Initialize a label with text and optional CSS class."""
-        self.text = text
-        self.cls = cls
+# class CustomLabel:
+#     def __init__(self, text, cls="label"):
+#         """Initialize a label with text and optional CSS class."""
+#         self.text = text
+#         self.cls = cls
 
-    def render(self):
-        """Render the label as a Div."""
-        return Div(self.text, cls=self.cls)
+#     def render(self):
+#         """Render the label as a Div."""
+#         return Div(self.text, cls=self.cls)
 
-    @staticmethod
-    def css():
-        """Return CSS styles for the Label."""
-        return """
-        <style>
-            .label {
-                margin: 10px;
-                padding: 10px;
-                border: 1px solid #ccc;
-                background-color: #f9f9f9;
-            }
-        </style>
-        """
-
-class CustomButton:
-    def __init__(self, text, cls="button"):
-        """Initialize a button with text and optional CSS class."""
-        self.text = text
-        self.cls = cls
-
-    def render(self):
-        """Render the button as a Button."""
-        return Button(self.text, cls=self.cls)
-
-    @staticmethod
-    def css():
-        """Return CSS styles for the Button."""
-        return """
-        <style>
-            .button {
-                margin: 10px;
-                padding: 10px 20px;
-                border: none;
-                background-color: #007bff;
-                color: white;
-                cursor: pointer;
-                border-radius: 5px;
-            }
-            .button:hover {
-                background-color: #0056b3;
-            }
-        </style>
-        """
+#     @staticmethod
+#     def css():
+#         """Return CSS styles for the Label."""
+#         return """
+#         <style>
+#             .label {
+#                 margin: 10px;
+#                 padding: 10px;
+#                 border: 1px solid #ccc;
+#                 background-color: #f9f9f9;
+#             }
+#         </style>
+#         """
 
 def example_flow_panel():
     # Create a FlowPanel instance
