@@ -36,61 +36,46 @@ class FlowPanel:
         </style>
         """
 
-# class CustomLabel:
-#     def __init__(self, text, cls="label"):
-#         """Initialize a label with text and optional CSS class."""
-#         self.text = text
-#         self.cls = cls
-
-#     def render(self):
-#         """Render the label as a Div."""
-#         return Div(self.text, cls=self.cls)
-
-#     @staticmethod
-#     def css():
-#         """Return CSS styles for the Label."""
-#         return """
-#         <style>
-#             .label {
-#                 margin: 10px;
-#                 padding: 10px;
-#                 border: 1px solid #ccc;
-#                 background-color: #f9f9f9;
-#             }
-#         </style>
-#         """
+label1 = CustomLabel("Label 1")
+label2 = CustomLabel("Label 2", margin="20px", background_color="#e0e0e0")
+label3 = CustomLabel("Label 3", color="blue", font_size="50px")
 
 def example_flow_panel():
     # Create a FlowPanel instance
     flow_panel = FlowPanel()
-    
-    # Add labels and buttons as child components
-    flow_panel.add(CustomLabel("Label 1").render())
-    flow_panel.add(CustomButton("Button 1").render())
-    flow_panel.add(CustomLabel("Label 2").render())
-    flow_panel.add(CustomButton("Button 2").render())
-    flow_panel.add(CustomLabel("Label 3").render())
-    flow_panel.add(CustomButton("Button 3").render())
+
+    # Create CustomLabel and CustomButton instances
+    button1 = CustomButton("Button 1")
+    button2 = CustomButton("Button 2", cls="custom-button")
+    button3 = CustomButton("Button 3", cls="custom-button")
+
+    # Add them to the FlowPanel
+    flow_panel.add(label1.render())
+    flow_panel.add(button1.render())
+    flow_panel.add(label2.render())
+    flow_panel.add(button2.render())
+    flow_panel.add(label3.render())
+    flow_panel.add(button3.render())
 
     # Render the FlowPanel
-    return flow_panel.render()
+    return flow_panel
 
 # Create a FastHTML application
 app, rt = fast_app()
 
 @rt("/")
 async def index():
-    flow_panel_content = example_flow_panel()
+    flow_panel = example_flow_panel()
     
     # Aggregate all CSS styles
-    all_css = FlowPanel.css() + CustomLabel.css() + CustomButton.css()
+    all_css = FlowPanel.css() + label1.css() + label2.css() + label3.css() + CustomButton("Button").css()
     
     return Div(
         H1("FlowPanel Example with Labels and Buttons"),
-        flow_panel_content,
+        flow_panel.render(),
         cls="container",
         style=all_css  # Include aggregated CSS styles
     )
 
 if __name__ == "__main__":
-    serve() 
+    serve()
