@@ -6,7 +6,6 @@ This project is to provide modular wrappers using [fasthtml library](https://git
 - [x] Button
 - [x] Label
 - [ ] Card
-- [ ] TextArea
 - [ ] DropdownMenu
 - [ ] Spacer
 - [ ] Image
