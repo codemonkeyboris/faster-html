@@ -1,6 +1,7 @@
 from fasthtml.common import *
 from label import CustomLabel
 from button import CustomButton
+from flowpanel import FlowPanel
 
 
 class Card:
@@ -47,28 +48,30 @@ class Card:
         style = "; ".join(f"{key}: {value}" for key, value in self.styles.items())
         hover_style = f"hover: {{ box-shadow: {self.hover_box_shadow}; }}"
 
-        # Return a Div with inline styles and add hover effect as inline style
         return Div(
             *self.children,
             **self.attrs,
             cls=self.cls,
-            style=style + f"; {hover_style}",  # Combine the hover effect and styles
+            style=style + f"; {hover_style}",
         )
 
 
-def example_card():
-    """Create a Card with multiple components inside it."""
+def example_flow_panel_with_cards():
+    """Create a FlowPanel with 3 Cards in a row."""
 
-    label1 = CustomLabel("This is a Label inside the Card")
-    label2 = CustomLabel(
-        "Another Label inside", margin="10px", background_color="#f0f0f0"
-    )
-    button1 = CustomButton("Click Me")
+    label1 = CustomLabel("Label inside Card 1")
+    label2 = CustomLabel("Label inside Card 2")
+    label3 = CustomLabel("Label inside Card 3")
 
-    # Create a Card instance and add components
-    card = Card(label1.render(), label2.render(), button1.render())
+    # Create Card instances
+    card1 = Card(label1.render(), CustomButton("Button 1").render())
+    card2 = Card(label2.render(), CustomButton("Button 2").render())
+    card3 = Card(label3.render(), CustomButton("Button 3").render())
 
-    return card.render()
+    # Create a FlowPanel and add the Cards
+    flow_panel = FlowPanel(card1.render(), card2.render(), card3.render())
+
+    return flow_panel.render()
 
 
 # FastHTML app example
@@ -77,11 +80,11 @@ app, rt = fast_app()
 
 @rt("/")
 async def index():
-    card_content = example_card()
+    flow_panel_content = example_flow_panel_with_cards()
 
     return Div(
-        H1("Card Component Example"),
-        card_content,
+        H1("FlowPanel with 3 Cards in a Row"),
+        flow_panel_content,
         cls="container",
     )
 
