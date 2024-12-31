@@ -74,7 +74,6 @@ def example_flow_panel_with_cards():
     return flow_panel.render()
 
 
-# FastHTML app example
 app, rt = fast_app()
 
 

@@ -79,7 +79,6 @@ def example_flow_panels():
     return horizontal_panel, vertical_panel
 
 
-# Create a FastHTML application
 app, rt = fast_app()
 
 

@@ -60,7 +60,7 @@ def example_flow_panel():
     # Render the FlowPanel
     return flow_panel
 
-# Create a FastHTML application
+
 app, rt = fast_app()
 
 @rt("/")

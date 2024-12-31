@@ -90,7 +90,6 @@ def test_buttons():
     )
 
 
-# Create a FastHTML application
 app, rt = fast_app()
 
 @rt("/")

@@ -62,7 +62,6 @@ def test_labels():
     )
 
 
-# Create a FastHTML application
 app, rt = fast_app()
 
 
