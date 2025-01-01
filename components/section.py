@@ -70,11 +70,11 @@ async def index():
     section1, section2 = example_sections()
 
     return Div(
-        H1("CustomSection Example with Added Items"),
+        H1("CustomSection Example with Full-Width Sections"),
         Div(
             section1.render(),
             section2.render(),
-            style="display: flex; gap: 20px;",  # To separate the two sections
+            style="display: flex; flex-direction: column; width: 100%;",  # Stack vertically and full width
         ),
         cls="container mx-auto",
     )
