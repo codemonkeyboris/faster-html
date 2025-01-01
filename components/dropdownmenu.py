@@ -1,6 +1,5 @@
 from fasthtml.common import *
 
-
 class DropdownMenu:
     def __init__(
         self,
@@ -41,13 +40,19 @@ class DropdownMenu:
         style = "; ".join(f"{key}: {value}" for key, value in self.styles.items())
         
         # Create <Option> elements for each option in the dropdown menu
-        options_html = [Option(option) for option in self.options]
+        options_html = [Option(option, value=option) for option in self.options]
         
-        return Select(*options_html, cls=self.cls, style=style)
-
+        # Generate the <select> element with onchange alert
+        select_element = Select(
+            *options_html,
+            cls=self.cls,
+            style=style,
+            onchange="alert('You selected: ' + this.value)"
+        )
+        return select_element
 
 ##################################################
-# Example usage of DropdownMenu
+# Example usage of DropdownMenu with Event
 
 def example_dropdown_menu():
     """Create a DropdownMenu example with options."""
@@ -68,7 +73,7 @@ async def index():
     dropdown_content = example_dropdown_menu()
 
     return Div(
-        H1("DropdownMenu Example"),
+        H1("DropdownMenu Example with Events"),
         dropdown_content,
         cls="container",
     )
