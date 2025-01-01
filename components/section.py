@@ -2,19 +2,22 @@ from fasthtml.common import *
 
 
 class CustomSection:
-    def __init__(self, content, bg_color="white", extra_classes="", flex=True):
+    def __init__(self, bg_color="white", extra_classes="", flex=True):
         """
         CustomSection for wrapping content with a predefined layout.
 
-        :param content: The content to include in the section.
         :param bg_color: Background color in any valid CSS color format.
         :param extra_classes: Additional CSS classes to append.
         :param flex: Whether to include a flex layout.
         """
-        self.content = content
+        self.children = []  # Initialize an empty list to hold child elements
         self.bg_color = bg_color
         self.extra_classes = extra_classes
         self.flex = flex
+
+    def add(self, component):
+        """Add a new component to the CustomSection."""
+        self.children.append(component)
 
     def render(self):
         """
@@ -29,69 +32,50 @@ class CustomSection:
             f"{self.extra_classes}"
         )
         style = f"background-color: {self.bg_color};"
-        return Section(self.content, cls=classes, style=style)
-
-
-##################################################
-# Example Usage
+        return Section(*self.children, cls=classes, style=style)
 
 
 def example_sections():
     """
     Create two example sections with different content and background colors.
     """
-    # First section content
-    content1 = Div(
-        H1("Welcome to the First Section!"),
-        P("This section has a blue background and white text."),
-        Button("Learn More", cls="btn-primary"),
-        cls="content-wrapper",
-    )
-    section1 = CustomSection(
-        content=content1,
-        bg_color="#007bff",  # Background color as a hex code
-        extra_classes="text-white",  # Additional styling
-        flex=True,  # Enable flex layout
-    )
+    # First section
+    section1 = CustomSection(bg_color="#007bff", extra_classes="text-white", flex=True)
+    section1.add(H1("Welcome to the First Section!"))
+    section1.add(P("This section has a blue background and white text."))
+    section1.add(Button("Learn More", cls="btn-primary"))
 
-    # Second section content
-    content2 = Div(
-        H1(
-            "Welcome to the Second Section!", style="color: #e63946;"
-        ),  # Text color: red-pink
+    # Second section
+    section2 = CustomSection(
+        bg_color="#f8f9fa", extra_classes="text-gray-800", flex=False
+    )
+    section2.add(H1("Welcome to the Second Section!", style="color: #e63946;"))
+    section2.add(
         P(
             "This section has a gray background and vibrant text.",
             style="color: #457b9d;",
-        ),  # Text color: blue
-        Button(
-            "Get Started", cls="btn-secondary", style="color: #2a9d8f;"
-        ),  # Button text color: green
-        cls="content-wrapper",
+        )
     )
-    section2 = CustomSection(
-        content=content2,
-        bg_color="#f8f9fa",  # Background color as a hex code
-        extra_classes="text-gray-800",  # Additional styling
-        flex=False,  # Disable flex layout
-    )
+    section2.add(Button("Get Started", cls="btn-secondary", style="color: #2a9d8f;"))
 
-    return Div(
-        section1.render(),
-        section2.render(),
-        cls="sections-container",
-    )
+    return section1, section2
 
 
+# FastHTML app example
 app, rt = fast_app()
 
 
 @rt("/")
 async def index():
-    sections = example_sections()
+    section1, section2 = example_sections()
 
     return Div(
-        H1("CustomSection Example with Two Sections"),
-        sections,
+        H1("CustomSection Example with Added Items"),
+        Div(
+            section1.render(),
+            section2.render(),
+            style="display: flex; gap: 20px;",  # To separate the two sections
+        ),
         cls="container mx-auto",
     )
 
