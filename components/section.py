@@ -55,9 +55,9 @@ def example_sections():
 
     # Second section content
     content2 = Div(
-        H1("Welcome to the Second Section!"),
-        P("This section has a gray background and dark text."),
-        Button("Get Started", cls="btn-secondary"),
+        H1("Welcome to the Second Section!", style="color: #e63946;"),  # Text color: red-pink
+        P("This section has a gray background and vibrant text.", style="color: #457b9d;"),  # Text color: blue
+        Button("Get Started", cls="btn-secondary", style="color: #2a9d8f;"),  # Button text color: green
         cls="content-wrapper"
     )
     section2 = CustomSection(
