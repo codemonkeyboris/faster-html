@@ -4,7 +4,7 @@ class NavigationBar:
     def __init__(self, logo, *menu_items, **kwargs):
         """
         Initialize the navigation bar with a logo and menu items.
-        
+
         :param logo: The logo element.
         :param menu_items: Menu items, which are link buttons.
         :param kwargs: Additional attributes for the navigation bar.
@@ -19,8 +19,7 @@ class NavigationBar:
 
     def render(self):
         """Render the navigation bar as a Div containing logo and menu items."""
-        # Logo is placed at the left, menu items to the right
-        navbar_style = "display: flex; justify-content: space-between; align-items: center; background-color: green; padding: 10px 20px;"
+        navbar_style = "display: flex; justify-content: space-between; align-items: center; background-color: green; padding: 10px 20px; width: 100%; box-sizing: border-box; margin: 0; position: fixed; top: 0; left: 0; z-index: 1000;"
         return Div(
             self.logo,
             Div(*self.menu_items, style="display: flex; gap: 20px;"),
@@ -37,15 +36,21 @@ def example_navbar():
 
     # Create link buttons using FastHTML's Button and style them as links
     home_button = A("Home", href="/", style="color: white; text-decoration: none;")
-    about_button = A("About", href="/about", style="color: white; text-decoration: none;")
-    contact_button = A("Contact", href="/contact", style="color: white; text-decoration: none;")
+    about_button = A(
+        "About", href="/about", style="color: white; text-decoration: none;"
+    )
+    contact_button = A(
+        "Contact", href="/contact", style="color: white; text-decoration: none;"
+    )
 
     # Create the navigation bar with the buttons
     navbar = NavigationBar(logo, home_button, about_button, contact_button)
-    
+
     return navbar
 
+
 app, rt = fast_app()
+
 
 @rt("/")
 async def index():
@@ -57,8 +62,10 @@ async def index():
             H1("Website with Navigation Bar"),
             style="margin-top: 60px;",  # Add margin to avoid overlap with navbar
         ),
-        cls="container"
+        cls="container",
+        style="width: 100%; box-sizing: border-box;",  # Ensure container spans full width
     )
+
 
 if __name__ == "__main__":
     serve()
