@@ -1,5 +1,6 @@
 from fasthtml.common import *
 
+
 class CustomSection:
     def __init__(self, content, bg_color="white", extra_classes="", flex=True):
         """
@@ -21,9 +22,7 @@ class CustomSection:
 
         :return: A Section element with the desired layout and styling.
         """
-        base_classes = (
-            "section-base1 col" if self.flex else "section-base1"
-        )
+        base_classes = "section-base1 col" if self.flex else "section-base1"
         classes = (
             f"{base_classes} -mt-8 lg:-mt-16 items-center "
             "rounded-t-3xl lg:rounded-t-[2.5rem] relative "
@@ -32,8 +31,10 @@ class CustomSection:
         style = f"background-color: {self.bg_color};"
         return Section(self.content, cls=classes, style=style)
 
+
 ##################################################
 # Example Usage
+
 
 def example_sections():
     """
@@ -44,7 +45,7 @@ def example_sections():
         H1("Welcome to the First Section!"),
         P("This section has a blue background and white text."),
         Button("Learn More", cls="btn-primary"),
-        cls="content-wrapper"
+        cls="content-wrapper",
     )
     section1 = CustomSection(
         content=content1,
@@ -55,10 +56,17 @@ def example_sections():
 
     # Second section content
     content2 = Div(
-        H1("Welcome to the Second Section!", style="color: #e63946;"),  # Text color: red-pink
-        P("This section has a gray background and vibrant text.", style="color: #457b9d;"),  # Text color: blue
-        Button("Get Started", cls="btn-secondary", style="color: #2a9d8f;"),  # Button text color: green
-        cls="content-wrapper"
+        H1(
+            "Welcome to the Second Section!", style="color: #e63946;"
+        ),  # Text color: red-pink
+        P(
+            "This section has a gray background and vibrant text.",
+            style="color: #457b9d;",
+        ),  # Text color: blue
+        Button(
+            "Get Started", cls="btn-secondary", style="color: #2a9d8f;"
+        ),  # Button text color: green
+        cls="content-wrapper",
     )
     section2 = CustomSection(
         content=content2,
@@ -73,8 +81,9 @@ def example_sections():
         cls="sections-container",
     )
 
-# FastHTML app example
+
 app, rt = fast_app()
+
 
 @rt("/")
 async def index():
@@ -85,6 +94,7 @@ async def index():
         sections,
         cls="container mx-auto",
     )
+
 
 if __name__ == "__main__":
     serve()
